@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model IEnumerable<CraftAContact.Models.Contact>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="display-4">Welcome to Craft-A-Contact!</h1>
+            <img src="~/images/CraftAContact-Logo.png" alt="Craft-A-Contact Logo" class="img-fluid my-3">
+            <p class="lead">This is Craft-A-Contact, your ultimate solution for managing contacts efficiently and effectively. Whether it be for professional or personal use, Craft-A-Contact offers an easy and efficient interface to ensure an enjoyable experience!</p>
+            <br />
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <p class="lead">In order to add, edit and delete contacts, you will need to log into your account. Not a member yet? Hit the register button and make an account. It only takes a minute!</p>
+                <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary btn-lg mt-3">Register now!</a>
+            }
+            else
+            {
+                <p class="lead">It seems that you are already a member with us! That said, you can add, edit or delete the contacts on your contact list.</p>
+
+            }
+        </div>
+    </div>
+</div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="container mt-3">
+        <h2>Contacts List</h2>
+        <table class="custom-contact-table">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Category</th>
+                    <th>Date Added</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var contact in Model)
+                {
+                    <tr>
+                        <td>@contact.FirstName</td>
+                        <td>@contact.LastName</td>
+                        <td>@contact.Email</td>
+                        <td>@contact.PhoneNumber</td>
+                        <td>@contact.Category?.CategoryName</td>
+                        <td>@contact.DateCreated</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
