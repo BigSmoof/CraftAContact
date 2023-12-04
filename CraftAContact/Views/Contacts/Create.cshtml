@@ -4,59 +4,63 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<br />
 
-<h4>Contact</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+<h2>Create New Contact</h2>
+
+@using (Html.BeginForm("Create", "Contacts", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center">Create New Contact</h2>
+
+                @using (Html.BeginForm("Create", "Contacts", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-floating mb-3">
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.LabelFor(model => model.FirstName)
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.LabelFor(model => model.LastName)
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.LabelFor(model => model.PhoneNumber)
+                        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.LabelFor(model => model.Email)
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        @Html.DropDownListFor(model => model.CategoryId, ViewBag.Categories as SelectList, "Select Category", new { @class = "form-control" })
+                        @Html.LabelFor(model => model.CategoryId)
+                        @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                    </div>
+
+                    <br />
+                    <br />
+
+                    <div class="form-group text-center">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                }
             </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateCreated" class="control-label"></label>
-                <input asp-for="DateCreated" class="form-control" />
-                <span asp-validation-for="DateCreated" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 }

@@ -63,11 +63,12 @@ namespace CraftAContact.Controllers
         {
             if (ModelState.IsValid)
             {
+                contact.DateCreated = DateTime.Now.ToString(); //Gets current time (in string form)
                 _context.Add(contact);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId", contact.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", contact.CategoryId);
             return View(contact);
         }
 
