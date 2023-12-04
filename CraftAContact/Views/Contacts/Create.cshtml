@@ -46,7 +46,7 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        @Html.DropDownListFor(model => model.CategoryId, ViewBag.Categories as SelectList, "Select Category", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.CategoryId, (SelectList)ViewData["CategoryId"], "Select Category", new { @class = "form-control" })
                         @Html.LabelFor(model => model.CategoryId)
                         @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
                     </div>

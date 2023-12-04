@@ -4,6 +4,7 @@ using CraftAContact.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CraftAContact.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231204164848_CorrectSeedData")]
+    partial class CorrectSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,7 +106,7 @@ namespace CraftAContact.Data.Migrations
                     b.HasData(
                         new
                         {
-                            ContactId = -1,
+                            ContactId = 3,
                             CategoryId = 2,
                             DateCreated = new DateTime(2023, 11, 29, 15, 20, 32, 0, DateTimeKind.Unspecified),
                             Email = "imBatman222@gmail.com",
@@ -114,24 +117,13 @@ namespace CraftAContact.Data.Migrations
                         },
                         new
                         {
-                            ContactId = -2,
+                            ContactId = 2,
                             CategoryId = 1,
                             DateCreated = new DateTime(2023, 11, 27, 12, 14, 12, 0, DateTimeKind.Unspecified),
                             Email = "kiryuChan11@msn.com",
                             FirstName = "Goro",
                             LastName = "Majima",
                             PhoneNumber = 5064779584L,
-                            Username = "Biggy1"
-                        },
-                        new
-                        {
-                            ContactId = -3,
-                            CategoryId = 4,
-                            DateCreated = new DateTime(2023, 11, 24, 11, 24, 11, 0, DateTimeKind.Unspecified),
-                            Email = "freddyfaz@gmail.com",
-                            FirstName = "Mike",
-                            LastName = "Afton",
-                            PhoneNumber = 5066885555L,
                             Username = "Biggy1"
                         });
                 });

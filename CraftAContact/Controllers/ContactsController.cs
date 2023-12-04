@@ -59,11 +59,19 @@ namespace CraftAContact.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContactId,FirstName,LastName,Email,PhoneNumber,DateCreated,CategoryId,Username")] Contact contact)
+        public async Task<IActionResult> Create([Bind("FirstName,LastName,Email,PhoneNumber,CategoryId,Username")] Contact contact)
         {
+            contact.DateCreated = DateTime.Now; //Gets current time
+            contact.Username = User.Identity.Name; //Get the username
+            
+            var modelStateErrors = ModelState.Values.SelectMany(m => m.Errors).Select(e => e.ErrorMessage).ToList(); //Debug
+
+            ModelState.Remove("Category");
+            ModelState.Remove("Username");
+
             if (ModelState.IsValid)
             {
-                contact.DateCreated = DateTime.Now.ToString(); //Gets current time (in string form)
+                
                 _context.Add(contact);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -85,7 +93,7 @@ namespace CraftAContact.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId", contact.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", contact.CategoryId);
             return View(contact);
         }
 
@@ -121,7 +129,7 @@ namespace CraftAContact.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId", contact.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", contact.CategoryId);
             return View(contact);
         }
 

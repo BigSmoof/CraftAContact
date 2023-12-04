@@ -31,24 +31,35 @@ namespace CraftAContact.Data
             modelBuilder.Entity<Contact>().HasData(
                 new Contact
                 {
-                    ContactId = 1,
+                    ContactId = -1,
                     FirstName = "Bruce",
                     LastName = "Wayne",
                     Email = "imBatman222@gmail.com",
                     PhoneNumber = 5066885555,
-                    DateCreated = "2023-11-29",
+                    DateCreated = new DateTime(2023, 11, 29, 15, 20, 32),
                     CategoryId = 2,
                     Username = "Biggy1"
                 },
                 new Contact
                 {
-                    ContactId = 2,
+                    ContactId = -2,
                     FirstName = "Goro",
                     LastName = "Majima",
-                    Email = "kiryuChan23@msn.com",
+                    Email = "kiryuChan11@msn.com",
                     PhoneNumber = 5064779584,
-                    DateCreated = "2023-11-24",
+                    DateCreated = new DateTime(2023, 11, 27, 12, 14, 12),
                     CategoryId = 1,
+                    Username = "Biggy1"
+                },
+                new Contact
+                {
+                    ContactId = -3,
+                    FirstName = "Mike",
+                    LastName = "Afton",
+                    Email = "freddyfaz@gmail.com",
+                    PhoneNumber = 5066885555,
+                    DateCreated = new DateTime(2023, 11, 24, 11, 24, 11),
+                    CategoryId = 4,
                     Username = "Biggy1"
                 }
                 );
