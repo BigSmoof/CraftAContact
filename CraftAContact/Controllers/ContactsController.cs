@@ -102,12 +102,18 @@ namespace CraftAContact.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ContactId,FirstName,LastName,Email,PhoneNumber,DateCreated,CategoryId,Username")] Contact contact)
+        public async Task<IActionResult> Edit(int id, [Bind("ContactId,FirstName,LastName,Email,PhoneNumber,DateCreated,CategoryId")] Contact contact)
         {
             if (id != contact.ContactId)
             {
                 return NotFound();
             }
+
+            //Force ModelState to not check for validity of Username and Category
+            ModelState.Remove("Username");
+            ModelState.Remove("Category");
+
+            contact.Username = User.Identity.Name; //Get the username
 
             if (ModelState.IsValid)
             {

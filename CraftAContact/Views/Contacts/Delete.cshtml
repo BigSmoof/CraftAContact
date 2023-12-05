@@ -56,8 +56,15 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="ContactId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <div class="row">
+            <div class="col-sm-auto">
+                <input type="hidden" asp-for="ContactId" />
+                <input type="submit" value="Delete" class="btn btn-danger" />
+            </div>
+            <div class="col-sm-auto">
+                <a asp-action="Index" class="btn btn-info">Back to List</a>
+            </div>
+        </div>
+        
     </form>
 </div>

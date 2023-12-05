@@ -4,68 +4,47 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<br />
+<h1>Contacts</h1>
 
+<br />
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Add New Contact</a>
 </p>
-<table class="table">
+<table class="custom-contact-table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateCreated)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category.CategoryName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Username)
-            </th>
-            <th></th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Date Added</th>
+            <th>Category</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateCreated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ContactId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ContactId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ContactId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                <td>@Html.DisplayFor(modelItem => item.DateCreated)</td>
+                <td>@Html.DisplayFor(modelItem => item.Category.CategoryName)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ContactId" class="btn btn-primary btn-md" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit contact information">
+                        <i class="fa-solid fa-pencil fa-lg" style="color: #fff;"></i> <!-- Font Awesome icon for Edit -->
+                    </a>
+                    <a asp-action="Details" asp-route-id="@item.ContactId" class="btn btn-info btn-md" data-bs-toggle="tooltip" data-bs-placement="top" title="Show more detail">
+                        <i class="fa-regular fa-file-lines fa-lg" style="color: #fff;"></i> <!-- Icon for Details -->
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.ContactId" class="btn btn-danger btn-md" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete contact">
+                        <i class="fa-solid fa-trash-can fa-lg" style="color: #fff;"></i> <!-- Icon for Delete -->
+                    </a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

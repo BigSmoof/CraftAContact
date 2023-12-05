@@ -31,7 +31,7 @@ namespace CraftAContact.Data
             modelBuilder.Entity<Contact>().HasData(
                 new Contact
                 {
-                    ContactId = -1,
+                    ContactId = 1,
                     FirstName = "Bruce",
                     LastName = "Wayne",
                     Email = "imBatman222@gmail.com",
@@ -42,7 +42,7 @@ namespace CraftAContact.Data
                 },
                 new Contact
                 {
-                    ContactId = -2,
+                    ContactId = 2,
                     FirstName = "Goro",
                     LastName = "Majima",
                     Email = "kiryuChan11@msn.com",
@@ -53,7 +53,7 @@ namespace CraftAContact.Data
                 },
                 new Contact
                 {
-                    ContactId = -3,
+                    ContactId = 3,
                     FirstName = "Mike",
                     LastName = "Afton",
                     Email = "freddyfaz@gmail.com",

@@ -18,7 +18,13 @@
             else
             {
                 <p class="lead">It seems that you are already a member with us! That said, you can add, edit or delete the contacts on your contact list.</p>
-                <a asp-controller="Contacts" asp-action="Create" class="btn btn-primary">Add New Contact</a>
+                <div class="row justify-content-center">
+                    <div class="col-sm-auto">
+                        <a asp-controller="Contacts" asp-action="Create" class="btn btn-primary me-1">Add New Contact</a>
+                        <a asp-controller="Contacts" asp-action="Index" class="btn btn-info">Show Contacts List</a>
+                    </div>
+                </div>
+                
             }
         </div>
     </div>
