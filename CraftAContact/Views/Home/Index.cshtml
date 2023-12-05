@@ -48,14 +48,18 @@
             <tbody>
                 @foreach (var contact in Model)
                 {
-                    <tr>
-                        <td>@contact.FirstName</td>
-                        <td>@contact.LastName</td>
-                        <td>@contact.Email</td>
-                        <td>@contact.PhoneNumber</td>
-                        <td>@contact.Category?.CategoryName</td>
-                        <td>@contact.DateCreated</td>
-                    </tr>
+                    @if (User.Identity.Name == contact.Username)
+                    {
+                        <tr>
+                            <td>@contact.FirstName</td>
+                            <td>@contact.LastName</td>
+                            <td>@contact.Email</td>
+                            <td>@contact.PhoneNumber</td>
+                            <td>@contact.Category?.CategoryName</td>
+                            <td>@contact.DateCreated</td>
+                        </tr>
+                    }
+                    
                 }
             </tbody>
         </table>
