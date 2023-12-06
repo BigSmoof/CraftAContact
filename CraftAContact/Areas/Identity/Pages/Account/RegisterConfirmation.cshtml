@@ -1,0 +1,17 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Register confirmation";
+}
+<br />
+
+<h1>@ViewData["Title"]</h1>
+@{
+<p>
+    Thank you for registering! A confirmation email has been sent to you. We can not wait to have you as member of Craft-A-Contact!
+</p>
+    <p>
+        <a asp-page="./ResendEmailConfirmation" class="btn btn-info">Resend Confirmation Email</a>
+    </p>
+}
+

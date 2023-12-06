@@ -13,10 +13,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using CraftAContact.Services;
 using Microsoft.Extensions.Logging;
 
 namespace CraftAContact.Areas.Identity.Pages.Account
@@ -136,8 +136,20 @@ namespace CraftAContact.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    //Try and catch to make sure confirmation email is being sent
+                    try
+                    {
+                        _logger.LogInformation("Sending confirmation email to {Email}", Input.Email); //Logging before
+                        await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                            $"Thank you for choosing Craft-A-Contact! Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>."); //Function that sends confirmation email
+                        _logger.LogInformation("Confirmation email sent to {Email}", Input.Email); //Logging after
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "An error occurred while sending the email to {Email}", Input.Email);
+                        return Content($"Error sending email: {ex.Message}");
+                    }
+                    
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -145,7 +157,7 @@ namespace CraftAContact.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        //await _signInManager.SignInAsync(user, isPersistent: false); //Commented out to the user is only logged in when the email is verified
                         return LocalRedirect(returnUrl);
                     }
                 }

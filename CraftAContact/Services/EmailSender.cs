@@ -1,41 +1,45 @@
 ﻿//EmailSender class to implement the IEmailSender interface
 
-using System.Net;
-using System.Net.Mail;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Extensions.Configuration;
 
 namespace CraftAContact.Services
 {
     public class EmailSender : IEmailSender
     {
-        private readonly IConfiguration _configuration;
+        private readonly string _sendGridApiKey;
+        private readonly ILogger<EmailSender> _logger;
 
-        public EmailSender(IConfiguration configuration)
+        public EmailSender(string sendGridApiKey, ILogger<EmailSender> logger)
         {
-            _configuration = configuration;
+            _sendGridApiKey = sendGridApiKey;
+            _logger = logger;
         }
 
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            var smtpClient = new SmtpClient(_configuration["EmailSettings:Host"])
+            try
             {
-                Port = int.Parse(_configuration["EmailSettings:Port"]),
-                Credentials = new NetworkCredential(_configuration["EmailSettings:Username"], _configuration["EmailSettings:Password"]),
-                EnableSsl = true,
-            };
+                var client = new SendGridClient(_sendGridApiKey);
+                var from = new EmailAddress("esk4808@umoncton.ca", "Craft-A-Contact");
+                var to = new EmailAddress(email);
+                var msg = MailHelper.CreateSingleEmail(from, to, subject, "", htmlMessage);
+                var response = await client.SendEmailAsync(msg);
 
-            var mailMessage = new MailMessage
+                // Log the response to check if there are issues
+                _logger.LogInformation(response.StatusCode.ToString());
+                _logger.LogInformation(await response.Body.ReadAsStringAsync());
+            }
+            catch (Exception ex)
             {
-                From = new MailAddress(_configuration["EmailSettings:EmailFrom"]),
-                Subject = subject,
-                Body = htmlMessage,
-                IsBodyHtml = true,
-            };
-            mailMessage.To.Add(email);
-
-            await smtpClient.SendMailAsync(mailMessage);
+                _logger.LogError(ex, "Email sending failed");
+            }
+            
         }
+
     }
 }

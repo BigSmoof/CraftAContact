@@ -5,19 +5,26 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Correctly retrieve the API key
+builder.Services.AddSingleton<IEmailSender, EmailSender>(serviceProvider =>
+{
+    var logger = serviceProvider.GetRequiredService<ILogger<EmailSender>>();
+    return new EmailSender(builder.Configuration["SendGrid:SendGridKey"], logger);
+});
+
+
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-//Registering IEmailSender with the dependency injection
-builder.Services.AddTransient<IEmailSender, EmailSender>();
+
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => 
 { 
     options.User.RequireUniqueEmail = true; //Added this to require unique email
-    options.SignIn.RequireConfirmedAccount = false;
+    options.SignIn.RequireConfirmedAccount = true; //Disable in case of testing without the need to verify email
 })
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();

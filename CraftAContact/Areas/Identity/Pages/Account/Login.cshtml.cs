@@ -115,6 +115,13 @@ namespace CraftAContact.Areas.Identity.Pages.Account
                     // Attempt to sign in
                     var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                     
+                    //Case for when the user's email isn't verified
+                    if (!await _userManager.IsEmailConfirmedAsync(user))
+                    {
+                        ModelState.AddModelError(string.Empty, "You must verify your email before logging in.");
+                        return Page();
+                    }
+
                     //Added a case where the user is redirected on Successful login
                     if (result.Succeeded) 
                     {
@@ -131,6 +138,7 @@ namespace CraftAContact.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 }
             }
+
 
 
 

@@ -6,9 +6,6 @@ namespace CraftAContact.Services
 {
     public interface IEmailSender
     {
-        public interface IEmailSender
-        {
-            Task SendEmailAsync(string email, string subject, string htmlMessage);
-        }
+        Task SendEmailAsync(string email, string subject, string htmlMessage);
     }
 }
