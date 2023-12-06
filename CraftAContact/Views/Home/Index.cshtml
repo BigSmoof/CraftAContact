@@ -3,6 +3,31 @@
 }
 @model IEnumerable<CraftAContact.Models.Contact>
 
+@section CSS
+    {
+    <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+}
+
+@section Scripts
+{
+    @*Datatables*@
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $('#contactTable').DataTable({
+            "columnDefs": [
+                {
+                }
+            ],
+            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
+
+        });
+
+    </script>
+
+}
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8 text-center">
@@ -34,7 +59,7 @@
 {
     <div class="container mt-3">
         <h2>Contacts List</h2>
-        <table class="custom-contact-table">
+        <table class="custom-contact-table" id="contactTable">
             <thead>
                 <tr>
                     <th>First Name</th>

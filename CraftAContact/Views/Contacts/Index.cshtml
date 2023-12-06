@@ -4,6 +4,35 @@
     ViewData["Title"] = "Index";
 }
 
+@section CSS
+{
+    <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet"
+    />
+}
+
+@section Scripts
+{
+    @*Datatables*@
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $('#contactTable').DataTable({
+            "columnDefs": [
+                {
+                    "orderable": false, "targets": -1
+                }
+            ],
+            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
+
+        });
+
+    </script>
+
+}
+
+
+
 <br />
 <h1>Contacts</h1>
 
@@ -11,7 +40,7 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Add New Contact</a>
 </p>
-<table class="custom-contact-table">
+<table class="custom-contact-table" id="contactTable">
     <thead>
         <tr>
             <th>First Name</th>
